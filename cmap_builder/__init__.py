@@ -1,80 +1,14 @@
 """
 Colormap builder.
 """
-from colorsys import hls_to_rgb, hsv_to_rgb, rgb_to_hls, rgb_to_hsv
 
 import numpy as np
 from matplotlib import colors as mcolors
 
 # Load all the available named colors in matplotlib
-from matplotlib.colors import Normalize, LinearSegmentedColormap, ListedColormap
+from matplotlib.colors import Normalize, LinearSegmentedColormap
 
-named_colors = dict(mcolors.BASE_COLORS, **mcolors.CSS4_COLORS)
-
-
-def _color_modifier_value(color_modifier, field):
-    """Get the vale of the the color modifier type, if any."""
-    try:
-        field_value = int(color_modifier.replace(field, ""))
-    except ValueError:
-        raise ValueError(f"Invalid color modifier: {color_modifier}")
-
-    if (field_value < 0) or (field_value > 100):
-        raise ValueError(f'Invalid value for "{field}" field: {color_modifier}')
-    return field_value / 100.0
-
-
-def rgb_from_name(named_color_ref):
-    """
-    Returns the RGB values of a named color (in the 0-1 range).
-    The color name supports the following color modifiers suffixes:
-
-    - "_l#": HLS lightness (L) modifier (0 to 100 range).
-      For example, "yellow_l75" changes the lightness to 0.75.
-    - "_s#": HSV saturation (S) modifier (0 to 100 range).
-      For example, "yellow_s75" changes the saturation to 0.75.
-    - "_v#": HSV value (V, or brightness) modifier (0 to 100 range).
-      For example, "yellow_v75" changes the brightness (value) to 0.75.
-    - "_light": Make color lighter. Same as the "_l10" modifier.
-    - "_dark": Make color darker. Same as the "_l80" modifier.
-    """
-    color_modifiers_count = named_color_ref.count("_")
-
-    if color_modifiers_count == 0:
-        rgb_color = named_colors[named_color_ref]
-        rgb_color = mcolors.to_rgba(rgb_color)[:3]
-    elif color_modifiers_count == 1:
-        named_color, hsv_args = named_color_ref.split("_", 2)[:2]
-        named_color, color_modifier = named_color_ref.split("_")
-
-        rgb_color = named_colors[named_color]
-        rgb_color = mcolors.to_rgba(rgb_color)[:3]
-
-        hls_color = np.array(rgb_to_hls(*rgb_color))
-        hsv_color = np.array(rgb_to_hsv(*rgb_color))
-
-        if color_modifier.endswith("dark"):
-            color_modifier = "l10"
-        elif color_modifier.endswith("light"):
-            color_modifier = "l80"
-
-        if "l" in color_modifier:
-            hls_color[1] = _color_modifier_value(color_modifier, "l")
-            rgb_color = hls_to_rgb(*hls_color)
-        elif "v" in color_modifier:
-            hsv_color[2] = _color_modifier_value(color_modifier, "v")
-            rgb_color = hsv_to_rgb(*hsv_color)
-        elif "s" in color_modifier:
-            hsv_color[1] = _color_modifier_value(color_modifier, "s")
-            rgb_color = hsv_to_rgb(*hsv_color)
-        else:
-            raise ValueError(f"Invalid color modifier: {hsv_args}")
-
-    else:
-        color_modifiers = named_color_ref.split("_", 1)[1]
-        raise ValueError(f"Unsupported color modifiers: {color_modifiers}")
-    rgb_color = tuple(round(f, 3) for f in rgb_color)
-    return rgb_color
+from cmap_builder.utils import rgb_from_name, named_colors
 
 
 class PiecewiseNorm(Normalize):
