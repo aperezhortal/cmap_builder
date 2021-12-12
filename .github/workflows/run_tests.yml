@@ -1,0 +1,42 @@
+name: Test cmap_builder
+
+on:
+  # Triggers the workflow on push or pull request events but only for the master branch
+  push:
+    branches: [ main, dev ]
+  pull_request:
+    branches: [ main, dev  ]
+
+jobs:
+  unit_tests:
+    name: Unit Tests (${{ matrix.python-version }}, ${{ matrix.os }})
+    runs-on: ${{ matrix.os }}
+
+    strategy:
+      fail-fast: false
+      matrix:
+        os: [ "ubuntu-latest"]
+        python-version: [ "3.7", "3.8", "3.9" ]
+      max-parallel: 3
+
+    defaults:
+      run:
+        shell: bash -l {0}
+
+    steps:
+      - uses: actions/checkout@v2
+      - uses: actions/setup-python@v2
+        with:
+          python-version: ${{ matrix.python-version }}
+
+      - name: Install cmap_builder
+        if: matrix.os != 'macos-latest'
+        working-directory: ${{github.workspace}}
+        run:
+          pip install --upgrade pip
+          pip install pytest
+          pip install matplotlib
+          pip install .
+
+      - name: Run tests
+        run: pytest --pyargs cmap_builder
