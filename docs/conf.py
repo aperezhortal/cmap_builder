@@ -48,7 +48,6 @@ extensions = [
     "nbsphinx_link",
     "sphinx_gallery.load_style",
     "sphinx.ext.mathjax",
-    "m2r2",
 ]
 exclude_patterns = ["_build", "**.ipynb_checkpoints"]
 
