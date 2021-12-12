@@ -68,3 +68,4 @@ ENV/
 
 # misc scripts
 make_pyenv.sh
+/docs/generated/

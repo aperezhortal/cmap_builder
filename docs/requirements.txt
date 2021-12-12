@@ -1,0 +1,8 @@
+# Additional requirements related to the documentation build only
+sphinx
+numpydoc
+sphinx_rtd_theme
+sphinx_gallery
+autodoc
+nbsphinx
+nbsphinx-link

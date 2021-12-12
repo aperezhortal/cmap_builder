@@ -1,5 +1,11 @@
 """
 Colormap builder.
+
+.. autosummary::
+    :toctree: ../generated/
+
+    build_cmap
+    PiecewiseNorm
 """
 
 import numpy as np
@@ -51,9 +57,9 @@ class PiecewiseNorm(Normalize):
 
         Parameters
         ----------
-        value
+        value: array-like
             Data to normalize.
-        clip : bool
+        clip: bool
             If ``None``, defaults to ``self.clip`` (which defaults to
             ``False``).
         Notes
@@ -114,16 +120,17 @@ def build_cmap(name, cmap_def, discrete=False, uniform=False, N=512):
     color segments, and a matplotlib's normalization function.
 
     The colormap definition is a list where each entry represents the color at a given
-    data value as:
+    data value as::
 
-    cmap_def = [
-        (x0, color_0, [next_color_0])  # next_color_0 ignored if provided.
-        (x1, color_1, [next_color_1])
-        ...
-        (xi, color_i, [next_color_i])
-        ..
-        (xn, color_n, [next_color_n])  # next_color_n is ignored if provided.
-    ]
+        cmap_def = [
+            (x0, color_0, [next_color_0])  # next_color_0 ignored if provided.
+            (x1, color_1, [next_color_1])
+            ...
+            (xi, color_i, [next_color_i])
+            ...
+            (xn, color_n, [next_color_n])  # next_color_n is ignored if provided.
+        ]
+
     where `color_i` represents the color immediately before the `xi` the data value.
     The optional `next_color_i` entry can be used to specify the color immediately after
     the `xi` the data value. This allow creating color maps with sharp color transitions.

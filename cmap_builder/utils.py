@@ -1,5 +1,11 @@
 """
 Helper functions.
+
+.. autosummary::
+    :toctree: ../generated/
+
+    rgb_from_name
+    plot_colortable
 """
 from colorsys import hls_to_rgb, hsv_to_rgb, rgb_to_hls, rgb_to_hsv
 
