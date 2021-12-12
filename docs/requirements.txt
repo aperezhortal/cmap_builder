@@ -6,3 +6,5 @@ sphinx_gallery
 autodoc
 nbsphinx
 nbsphinx-link
+ipykernel
+jupyterlab
