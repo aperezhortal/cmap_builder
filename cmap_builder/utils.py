@@ -85,10 +85,10 @@ def rgb_from_name(named_color_ref):
 def plot_colortable(show=True):
     """
     Plot matplotlib's named color table.
-
-    Adapted from:
-    https://matplotlib.org/stable/gallery/color/named_colors.html
     """
+
+    # Function adapted from:
+    # https://matplotlib.org/stable/gallery/color/named_colors.html
 
     cell_width = 212
     cell_height = 22
@@ -104,10 +104,10 @@ def plot_colortable(show=True):
     names = [name for hsv, name in by_hsv]
 
     n = len(names)
-    ncols = 4
+    ncols = 3
     nrows = n // ncols + int(n % ncols > 0)
 
-    width = cell_width * 4 + 2 * margin
+    width = cell_width * ncols + 2 * margin
     height = cell_height * nrows + margin + topmargin
     dpi = 72
 
@@ -119,7 +119,7 @@ def plot_colortable(show=True):
         (width - margin) / width,
         (height - topmargin) / height,
     )
-    ax.set_xlim(0, cell_width * 4)
+    ax.set_xlim(0, cell_width * ncols)
     ax.set_ylim(cell_height * (nrows - 0.5), -cell_height / 2.0)
     ax.yaxis.set_visible(False)
     ax.xaxis.set_visible(False)
