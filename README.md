@@ -2,13 +2,19 @@
 
 A simple tool to create custom colormaps for matplotlib.
 
+---
+
+Here, we present the basic usage of the library and the installation instructions.
+For additional information, check the [project's documentation](https://cmap-builder.readthedocs.io) for more detailed information about the library. 
+Especially the [examples gallery](https://cmap-builder.readthedocs.io/en/latest/gallery/index.html#example-gallery) with tutorials for using this library.
+
 ## Usage
 
 Matplotlib allows creating different types colormaps using the 
 [ListedColormap](https://matplotlib.org/stable/api/_as_gen/matplotlib.colors.ListedColormap.html#matplotlib.colors.ListedColormap) or [LinearSegmentedColormap](https://matplotlib.org/stable/api/_as_gen/matplotlib.colors.LinearSegmentedColormap.html#matplotlib.colors.LinearSegmentedColormap) classes.
 However, they are either limited in scope (ListedColormap or LinearSegmentedColormap.from_list) or require defining the mapping for each primary color (r,g,b).
 
-The cmap_builder.build_cmap()` function provided by this package exposes a simple interface to create complex colormaps simply by specifying the colors at different points across the color scale. This approach was largely inspired by the way of defining colormaps in the [legs](https://domutils.readthedocs.io/en/stable/legsTutorial.html) module in the [domutils package](https://domutils.readthedocs.io).
+The `cmap_builder.build_cmap()` function exposes a simple interface to create complex colormaps simply by specifying the colors at different points across the color scale. This approach defining colormaps was inspired mainly by the [legs](https://domutils.readthedocs.io/en/stable/legsTutorial.html) module in the [domutils package](https://domutils.readthedocs.io).
 
 The colormap definition required by `build_cmap` is a list of (data value, color, [next_color]) tuples like the following:
 ```
@@ -22,9 +28,8 @@ cmap_def = [
 ]
 ```
 where `color_i` represents the color immediately before the `xi` the data value.
-The optional `next_color_i` entry can be used to specify the color immediately after
-the `xi` the data value. This allows creating color maps with sharp color transitions.
-Here, the `xi` values are not restricted to the [0,1] interval as in the matplotlib tools. Instead, any data interval is supported for the `xi`. Hence, we can use the same units as the data we want to plot, making the definition of
+The optional `next_color_i` entry can specify the color immediately after the `xi` data value. This allows creating color maps with sharp color transitions.
+Here, the `xi` values are not restricted to the [0,1] interval in the matplotlib tools. Instead, any data interval is supported for the `xi`. Hence, we can use the same units as the data we want to plot, making the definition of
 colormaps easier.
 
 #### Example
@@ -56,15 +61,15 @@ my_cmap, my_ticks, my_norm = build_cmap(
     N=700,  # color palette quantization levels.
 )
 
-# uniform=True creates norm that maps the input values to equally 
+# uniform=True creates a norm that maps the input values to equally 
 # spaced color segments 
 ```
 
-Check the [project's example gallery](#https://cmap-builder.readthedocs.io/en/latest/gallery/index.html#example-gallery) for a short tutorial showcasing other the capabilities of this library.
+For more information, check the [project's example gallery](https://cmap-builder.readthedocs.io/en/latest/gallery/index.html#example-gallery) containing tutorials for using this library.
 
 ## Installation
 
-You can install the packagge directly from github using:
+You can install the package directly from GitHub using:
 ```console
 pip install git+https://github.com/aperezhortal/cmap_builder.git
 ```
